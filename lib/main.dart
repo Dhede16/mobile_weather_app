@@ -1,11 +1,10 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
-// Daftar dulu di https://openweathermap.org/api untuk dapat API key gratis
-const String kApiKey = '108e432ad82b9ca4f479bdae84cb671f';
-
-void main() {
+Future<void> main() async {
+  await dotenv.load(fileName: ".env");
   runApp(const CuacaApp());
 }
 
@@ -68,7 +67,7 @@ class _CuacaPageState extends State<CuacaPage> {
       '/data/2.5/weather',
       <String, String>{
         'q': kota,
-        'appid': kApiKey,
+        'appid': dotenv.env['OPW_API_KEY'] ?? '',
         'units': 'metric',
         'lang': 'id',
       },
